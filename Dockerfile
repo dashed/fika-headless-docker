@@ -83,7 +83,7 @@ RUN curl -SL 'https://download.visualstudio.microsoft.com/download/pr/85d47aa9-6
     -o /.cache/winetricks/ucrtbase2019/VC_redist.x86.exe
 RUN curl -SL 'https://download.visualstudio.microsoft.com/download/pr/85d47aa9-69ae-4162-8300-e6b7e4bf3cf3/52B196BBE9016488C735E7B41805B651261FFA5D7AA86EB6A1D0095BE83687B2/VC_redist.x64.exe' \
     -o /.cache/winetricks/ucrtbase2019/VC_redist.x64.exe
-RUN xvfb-run -a winetricks -q vcrun2019 dotnetdesktop8
+RUN winetricks -q vcrun2019 dotnetdesktop8
 
 ENV PROFILE_ID=test
 ENV SERVER_URL=127.0.0.1
