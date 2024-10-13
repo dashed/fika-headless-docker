@@ -1,5 +1,10 @@
 #!/bin/bash -e
 
+# Set environment variables
+export HOME=/home/wineuser
+export WINEPREFIX=/home/wineuser/.wine
+export WINEARCH=win64
+
 eft_binary=/opt/tarkov/EscapeFromTarkov.exe
 xvfb_run="xvfb-run -a"
 nographics="-nographics"
@@ -62,7 +67,10 @@ run_client() {
         echo "Xvfb process not found. Restarting Xvfb."
         run_xvfb
     fi
-    WINEDEBUG=-all $xvfb_run $WINE $eft_binary $batchmode $nographics $nodynamicai -token="$PROFILE_ID" -config="{'BackendUrl':'http://$SERVER_URL:$SERVER_PORT', 'Version':'live'}"
+    # Run the game client as wineuser
+    exec gosu wineuser WINEDEBUG=-all $xvfb_run $WINE $eft_binary $batchmode $nographics $nodynamicai \
+        -token="$PROFILE_ID" \
+        -config="{'BackendUrl':'http://$SERVER_URL:$SERVER_PORT', 'Version':'live'}"
 }
 
 start_crond() {
