@@ -83,11 +83,11 @@ WORKDIR /home/wineuser
 # Switch to wineuser
 USER wineuser
 
-# Pre-initialize Wine prefix
-RUN xvfb-run -a wineboot --init
+# Pre-initialize Wine prefix without xvfb-run
+RUN wineboot --init
 
 # Set Windows version
-RUN xvfb-run -a winecfg -v win10
+RUN winecfg -v win10
 
 # Install necessary Windows fonts and components
 RUN winetricks -q corefonts arial times
@@ -100,7 +100,7 @@ RUN mkdir -p /home/wineuser/.cache/winetricks/vcrun2019 && \
         -o /home/wineuser/.cache/winetricks/vcrun2019/VC_redist.x64.exe
 
 # Install Visual C++ Redistributable and .NET Desktop Runtime
-RUN xvfb-run -a winetricks -q vcrun2019 dotnetdesktop8
+RUN winetricks -q vcrun2019 dotnetdesktop8
 
 # Copy registry files to wineuser's WINEPREFIX
 COPY --chown=wineuser:wineuser ./data/reg/user.reg /home/wineuser/.wine/
