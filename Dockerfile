@@ -68,6 +68,12 @@ ENV WINEARCH win64
 
 WORKDIR /
 
+# Pre-initialize Wine prefix
+RUN wineboot --init
+
+# Set Windows version
+RUN winecfg -v win10
+
 # Install wineprefix deps
 # Have to run these separately for some reason or else they fail
 RUN winetricks arial times 
